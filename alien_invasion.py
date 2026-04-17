@@ -40,23 +40,30 @@ class AlienInvasion:
 
     def run_game(self):
         """Run the main game loop and handle events."""
+
         while self.running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.running = False
-                    pygame.quit()
-                    sys.exit()
+            self._check_events()
 
             # Draw background image
-            self.screen.blit(self.bg, (0, 0))
-            self.ship.draw()
-
-
-            # Update the screen
-            pygame.display.flip()
+            self._update_screen()
 
             # Limit FPS
             self.clock.tick(self.settings.Fps)
+
+    def _update_screen(self):
+        self.screen.blit(self.bg, (0, 0))
+        self.ship.draw()
+
+
+            # Update the screen
+        pygame.display.flip()
+
+    def _check_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
+                pygame.quit()
+                sys.exit()
 
 
 if __name__ == '__main__':
