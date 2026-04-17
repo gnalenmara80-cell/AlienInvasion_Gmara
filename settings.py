@@ -27,16 +27,25 @@ class Settings:
 
         # Ship settings
         self.ship_file = Path.cwd() / 'Assets' / 'images' / 'ship.png'
-        self.ship_width = 40
-        self.ship_height = 60
-        self.ship_speed = 3
+        self.ship_width = 50
+        self.ship_height = 70
+        self.ship_speed = 4
         # Bullet settings
 
         self.bullet_file = Path.cwd() / 'Assets' / 'images' / 'beams.png'
         self.laser_sound = Path.cwd() / 'Assets' / 'sound' / 'impactSound.mp3'
         self.bullet_speed = 6
-        self.bullet_width = 25
-        self.bullet_height = 80
+        self.bullet_width = 20
+        self.bullet_height = 75
         self.bullets_allowed = 5
 
+        self.alien_file = Path.cwd() / 'Assets' / 'images' / 'enemy_3.png'
+        self.fleet_drop_speed = 10
+        self.fleet_direction = 1  # 1 represents right; -1 represents left
+        self.alien_width = 50
+        self.alien_height = 50
 
+
+
+
+  
