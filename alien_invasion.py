@@ -21,6 +21,7 @@ class AlienInvasion:
         pygame.init()
         self.settings = Settings()
 
+        # Create the game window
         self.screen = pygame.display.set_mode(
             (self.settings.screen_width, self.settings.screen_height)
         )
@@ -40,32 +41,61 @@ class AlienInvasion:
 
     def run_game(self):
         """Run the main game loop and handle events."""
-
+     #game loop
         while self.running:
             self._check_events()
+            self.ship.update()
 
             # Draw background image
             self._update_screen()
 
             # Limit FPS
             self.clock.tick(self.settings.Fps)
+            self.clock.tick(self.settings.Fps)
 
     def _update_screen(self):
+        """Update the game screen by drawing the background and ship."""
         self.screen.blit(self.bg, (0, 0))
         self.ship.draw()
 
-
-            # Update the screen
+        # Update the screen
         pygame.display.flip()
 
     def _check_events(self):
+        """Check for and respond to user input events."""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
                 pygame.quit()
                 sys.exit()
+            elif event.type == pygame.KEYDOWN:
+               self._check_keydown_events(event)
+            elif event.type == pygame.KEYUP:
+               self._check_keyup_events(event)
+
+    def _check_keyup_events(self, event):
+        """Respond to key release events."""
+        if event.key == pygame.K_RIGHT:
+            self.ship.moving_right = False
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = False
+  
+
+    def _check_keydown_events(self, event):
+        """Respond to key press events."""
+        if event.key == pygame.K_RIGHT:
+            self.ship.moving_right = True
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = True
+        elif event.key == pygame.K_q:
+            # Quit the game
+            self.running = False
+            pygame.quit()
+            sys.exit()
+
 
 
 if __name__ == '__main__':
+    # Create an instance of the game and run it
     ai = AlienInvasion()
     ai.run_game()
