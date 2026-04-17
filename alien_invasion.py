@@ -98,6 +98,7 @@ class AlienInvasion:
             self.ship.fire()
             # Play laser sound effect
             self.laser_sound.play()
+            self.laser_sound.fadeout(250)  # Fade out the sound after 250 milliseconds
 
 
         elif event.key == pygame.K_q:
