@@ -6,6 +6,7 @@ class Settings:
     """
     def __init__(self):
         """Initialize the game's settings."""
+        
         self.name = "Alien Invasion"
         self.screen_width = 1200
         self.screen_height = 800
@@ -18,3 +19,4 @@ class Settings:
         self.ship_file = Path.cwd() / 'Assets' / 'images' / 'ship2(no bg).png'
         self.ship_width = 40
         self.ship_height = 60
+        self.ship_speed = 3
