@@ -14,7 +14,6 @@ from ship import Ship
 from aresenal import Arsenal
 
 
-
 class AlienInvasion:
     """Main game class for handling setup and the game loop."""
 
