@@ -13,7 +13,8 @@ if TYPE_CHECKING:
 class Alien(Sprite):
     """Represents an alien enemy in the Alien Invasion game."""
 
-    def __init__(self, game: 'AlienInvasion', x: float, y: float):
+    def __init__(self, game, x, y):
+
         """Initialize the alien and set its starting position."""
         super().__init__()
         self.game = game
@@ -30,13 +31,19 @@ class Alien(Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.x = float(self.rect.x)
         self.y = float(self.rect.y)
 
     def update(self):
-        """Move the alien down the screen."""
-        self.y += self.settings.bullet_speed
-        self.rect.y = self.y
+        """Move the alien horizontally across the screen."""
+        self.x += self.settings.alien_speed * self.settings.fleet_direction
+        self.rect.x = self.x
 
+    def check_edges(self):
+        
+        screen_rect = self.screen.get_rect()
+        return self.rect.right >= screen_rect.right or self.rect.left <= 0
+        
     def draw_alien(self):
         """Draw the alien on the screen."""
         self.screen.blit(self.image, self.rect)

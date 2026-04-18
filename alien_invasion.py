@@ -12,7 +12,6 @@ import pygame
 from settings import Settings
 from ship import Ship
 from aresenal import Arsenal
-from alien import Alien
 
 
 
@@ -46,8 +45,9 @@ class AlienInvasion:
 
 
         self.ship = Ship(self, Arsenal(self))
-        self.aliens = Alien(self, 15, 15
-                                  )  # Example alien at position (15, 15)
+        from alien_fleet import AlenFleet
+        self.aliens = AlenFleet(self)
+
 
         
     def run_game(self):
@@ -56,22 +56,23 @@ class AlienInvasion:
         while self.running:
             self._check_events()
             self.ship.update()
-            self.aliens.update()  # Update alien position
+            self.aliens.fleet.update()  # Update alien position
 
             # Draw background image
             self._update_screen()
 
             # Limit FPS
             self.clock.tick(self.settings.Fps)
-            self.clock.tick(self.settings.Fps)
+
 
     def _update_screen(self):
         """Update the game screen by drawing the background and ship."""
         self.screen.blit(self.bg, (0, 0))
         self.ship.draw()
         self.ship.arsenal.draw()    
-        self.aliens.draw_alien()  # Draw the alien on the screen
-        
+        for alien in self.aliens.fleet.sprites():
+            alien.draw_alien()
+
 
         # Update the screen
         pygame.display.flip()
