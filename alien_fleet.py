@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
 
 
-class AlenFleet:
+class AlienFleet:
     """Manages a fleet of aliens in the Alien Invasion game."""
 
     def __init__(self, game: 'AlienInvasion'):
@@ -18,7 +18,6 @@ class AlenFleet:
         self.settings = game.settings
         self.screen = game.screen
         self.fleet = pygame.sprite.Group()
-        self.fleet_direction = self.settings.fleet_direction
         self.fleet_drop_speed = self.settings.fleet_drop_speed
 
         self._create_fleet()
@@ -66,7 +65,37 @@ class AlenFleet:
     def _create_alien(self, x: float, y: float):
         """Create an alien and place it in the fleet."""
         alien = Alien(self.game, x, y)
+
+        alien.x = float(alien.rect.x)
+        alien.y = float(alien.rect.y)   
         self.fleet.add(alien)
+    
+
+
+
+    def _check_fleet_edges(self):
+        
+        """Check if any aliens have reached an edge, and return True if so."""
+        for alien in self.fleet.sprites():
+            if alien.check_edges():
+                return True
+        return False 
+            
+
+    def update_fleet(self):
+        
+        """Update the positions of all aliens in the fleet."""
+        if self._check_fleet_edges():
+            self._change_fleet_direction()
+        self.fleet.update() 
+
+    def _change_fleet_direction(self):
+        """ Drop the entire fleet and change its direction"""
+        for alien in self.fleet.sprites():
+            alien.rect.y += self.fleet_drop_speed
+        self.settings.fleet_direction *= -1
+        
+
 
     def draw_alien(self):
         """Draw the alien on the screen."""

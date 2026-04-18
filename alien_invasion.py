@@ -14,6 +14,7 @@ from ship import Ship
 from aresenal import Arsenal
 
 
+
 class AlienInvasion:
     """Main game class for handling setup and the game loop."""
 
@@ -44,8 +45,8 @@ class AlienInvasion:
 
 
         self.ship = Ship(self, Arsenal(self))
-        from alien_fleet import AlenFleet
-        self.aliens = AlenFleet(self)
+        from alien_fleet import AlienFleet
+        self.aliens = AlienFleet(self)
 
 
         
@@ -55,7 +56,8 @@ class AlienInvasion:
         while self.running:
             self._check_events()
             self.ship.update()
-            self.aliens.fleet.update()  # Update alien position
+
+            self.aliens.update_fleet()
 
             # Draw background image
             self._update_screen()

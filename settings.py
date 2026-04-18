@@ -45,11 +45,13 @@ class Settings:
 
         # Alien settings
         self.alien_file = Path.cwd() / 'Assets' / 'images' / 'enemy_3.png'
-        self.fleet_drop_speed = 10
+        self.fleet_drop_speed = 5
         self.fleet_direction = 1  # 1 represents right; -1 represents left
         self.alien_width = 50
         self.alien_height = 50
         self.alien_speed = 1
+        self.fleet_speed = 2
+
 
 
 

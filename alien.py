@@ -14,23 +14,24 @@ class Alien(Sprite):
     """Represents an alien enemy in the Alien Invasion game."""
 
     def __init__(self, game, x, y):
-
-        """Initialize the alien and set its starting position."""
         super().__init__()
+      
         self.game = game
         self.settings = game.settings
         self.screen = game.screen
         self.boundaries = game.screen.get_rect()
-
-
-
+ 
+ 
+        
         self.image = pygame.image.load(self.settings.alien_file)
         self.image = pygame.transform.scale(self.image,
            (self.settings.alien_width, self.settings.alien_height)
            )
+        
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+
         self.x = float(self.rect.x)
         self.y = float(self.rect.y)
 
