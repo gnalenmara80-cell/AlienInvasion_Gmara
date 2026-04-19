@@ -58,8 +58,6 @@ class AlienInvasion:
         """Run the main game loop and handle events."""
         try:
             while self.running:
-               self._check_events()
-
                if self.game_active:
                    self.ship.update()
                    self.ship.arsenal.update_arsenal()
