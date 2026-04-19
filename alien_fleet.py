@@ -49,7 +49,6 @@ class AlienFleet:
             
 
     def calculate_fleet_size(self, alien_width: int, screen_width: int, alien_height: int, screen_height: int):
-    
      available_space_x = screen_width - (2 * alien_width)
      fleet_width = available_space_x // (alien_width + 10)
 
@@ -101,3 +100,16 @@ class AlienFleet:
         """Draw the alien on the screen."""
         for alien in self.fleet.sprites():
             alien.draw_alien()
+
+    def check_collisions(self, other_group):
+        return pygame.sprite.groupcollide(self.fleet, other_group, True, True)
+    
+    def check_fleet_bottom(self):
+        """Check if any aliens have reached the bottom of the screen."""
+        alien: Alien
+        screen_rect = self.screen.get_rect()
+        for alien in self.fleet.sprites():
+            if alien.rect.bottom >= screen_rect.bottom:
+                return True
+        return False
+    

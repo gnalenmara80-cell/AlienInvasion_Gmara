@@ -36,7 +36,9 @@ class Settings:
 
         # Bullet settings
         self.bullet_file = Path.cwd() / 'Assets' / 'images' / 'beams.png'
-        self.laser_sound = Path.cwd() / 'Assets' / 'sound' / 'impactSound.mp3'
+        self.laser_sound = Path.cwd() / 'Assets' / 'sound' / 'laser.mp3'
+        self.impact_sound = Path.cwd() / 'Assets' / 'sound' / 'impactSound.mp3'
+
         self.bullet_speed = 12
         self.bullet_width = 20
         self.bullet_height = 75
@@ -45,12 +47,15 @@ class Settings:
 
         # Alien settings
         self.alien_file = Path.cwd() / 'Assets' / 'images' / 'enemy_3.png'
-        self.fleet_drop_speed = 5
+
+
+        self.fleet_drop_speed = 10
         self.fleet_direction = 1  # 1 represents right; -1 represents left
         self.alien_width = 50
         self.alien_height = 50
-        self.alien_speed = 1
+        self.alien_speed = 3
         self.fleet_speed = 2
+  
 
 
 

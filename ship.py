@@ -25,23 +25,26 @@ class Ship:
         self.bounderies = self.screen.get_rect()
 
         self.image = pygame.image.load(self.settings.ship_file)
-        self.image = pygame.transform.scale(self.image,
-           (self.settings.ship_width, self.settings.ship_height)
-
-        )
-
+        self.image = pygame.transform.scale(
+            self.image, 
+            (self.settings.ship_width, self.settings.ship_height)
+            )  
 
         self.rect = self.image.get_rect()
-        self.rect.midbottom = self.bounderies.midbottom
+        self._center_ship()
         self.moving_right = False
         self.moving_left = False
-        self.x = float(self.rect.x)
+       
         self.arsenal = arsenal
+
+    def _center_ship(self):
+        self.rect.midbottom = self.bounderies.midbottom
+        self.x = float(self.rect.x)
 
  
     def update(self):
         """Update the ship's position based on movement flags and boundaries."""
-         # update the position of the ship
+        # update the position of the ship
         self._update_ship_movement()
         self.arsenal.update_arsenal()  # Update the position of bullets in the arsenal
 
@@ -61,3 +64,11 @@ class Ship:
 
     def fire(self):
         return self.arsenal.fire_bullet()  # Attempt to fire a bullet and return the result
+    
+
+    
+    def check_collisions(self, other_group):
+         if pygame.sprite.spritecollideany(self, other_group):
+           self._center_ship()
+           return True
+         return False 
