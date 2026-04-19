@@ -12,7 +12,7 @@ class Arsenal:
         """Initialize the ship's arsenal with a reference to the game."""
         self.game = game
         self.settings = game.settings
-        self.arsenal = pygame.sprite.Group()  # Group to hold all active bullets
+        self.arsenal = pygame.sprite.Group()  # Group to hold all active bullets   
 
 
     def update_arsenal(self):
@@ -39,3 +39,6 @@ class Arsenal:
             self.arsenal.add(new_bullet)
             return True  # Indicate that a bullet was fired
         return False  # Indicate that the bullet limit has been reached 
+    
+    def empty(self):
+        self.arsenal.empty()
