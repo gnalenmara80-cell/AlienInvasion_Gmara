@@ -10,8 +10,14 @@ Basic pygame setup and starter game loop.
 import sys
 import pygame
 from settings import Settings
+from game_stats import GameStats    
 from ship import Ship
 from aresenal import Arsenal
+
+# from alien_fleet import AlienFleet
+from alien_fleet import AlienFleet
+from time import sleep
+
 
 
 class AlienInvasion:
@@ -20,6 +26,7 @@ class AlienInvasion:
     def __init__(self):
         pygame.init()
         self.settings = Settings()
+        self.game_stats = GameStats(self.settings.starting_ship_count)
 
         self.screen = pygame.display.set_mode(
             (self.settings.screen_width, self.settings.screen_height)
@@ -45,18 +52,23 @@ class AlienInvasion:
         self.ship = Ship(self, Arsenal(self))
         from alien_fleet import AlienFleet
         self.alien_fleet = AlienFleet(self)
+        self.game_active = True
 
     def run_game(self):
         """Run the main game loop and handle events."""
         try:
-           while self.running:
-            self._check_events()
-            self.ship.update()
-            self.ship.arsenal.update_arsenal()
-            self.alien_fleet.update_fleet()
-            self._check_collisions()
-            self._update_screen()
-            self.clock.tick(self.settings.Fps)
+            while self.running:
+               self._check_events()
+
+               if self.game_active:
+                   self.ship.update()
+                   self.ship.arsenal.update_arsenal()
+                   self.alien_fleet.update_fleet()
+
+               self._check_collisions()
+               self._update_screen()
+               self.clock.tick(self.settings.Fps)
+
         except Exception as e:
             print("GAME CRASHED WITH ERROR:", e)
             pygame.quit()
@@ -68,12 +80,12 @@ class AlienInvasion:
 
         # Ship hits alien
         if self.ship.check_collisions(self.alien_fleet.fleet):
-            self._reset_level()
+            self._check_game_status()
             return
 
         # Alien hits bottom
         if self.alien_fleet.check_fleet_bottom():
-            self._reset_level()
+            self._check_game_status()
             return
 
         # Bullet hits alien
@@ -85,6 +97,19 @@ class AlienInvasion:
         # All aliens destroyed
         if self.alien_fleet.check_destroyed_status():
             self._reset_level()
+    
+    def _check_game_status(self):
+        """Check the player's remaining ships and reset the level or end the game."""
+        
+        if self.game_stats.ship_limit > 0:
+            self.game_stats.ship_limit -= 1
+            self._reset_level()
+            sleep(0.5)  # Brief pause before resetting the level
+
+        else:
+            self.game_active = False
+
+
 
     def _reset_level(self):
         self.ship.arsenal.empty()
@@ -130,7 +155,6 @@ class AlienInvasion:
             self.running = False
             pygame.quit()
             sys.exit()
-
 
 if __name__ == '__main__':
     ai = AlienInvasion()

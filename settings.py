@@ -31,6 +31,8 @@ class Settings:
         self.ship_width = 50
         self.ship_height = 70
         self.ship_speed = 7
+        self.starting_ship_count = 3
+
 
 
 
@@ -49,7 +51,7 @@ class Settings:
         self.alien_file = Path.cwd() / 'Assets' / 'images' / 'enemy_3.png'
 
 
-        self.fleet_drop_speed = 10
+        self.fleet_drop_speed = 15
         self.fleet_direction = 1  # 1 represents right; -1 represents left
         self.alien_width = 50
         self.alien_height = 50
