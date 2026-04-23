@@ -57,6 +57,15 @@ class Settings:
         self.alien_height = 50
         self.alien_speed = 3
         self.fleet_speed = 2
+
+        self.button_w = 200
+        self.button_h = 50
+        self.button_color = (0,135,50)
+
+        self.text_color = (255, 255, 255)
+        self.button_font_size = 45
+        self.HUD_font_size = 18
+        self.font_file = Path.cwd() / 'Assets' / 'Fonts' / 'Silkscreen' / 'Silkscreen-Bold.ttf'
   
 
 
