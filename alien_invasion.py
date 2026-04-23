@@ -100,6 +100,10 @@ class AlienInvasion:
         # All aliens destroyed
         if self.alien_fleet.check_destroyed_status():
             self._reset_level()
+            self.settings.increase_difficulty()
+            # update game stats level
+            # update HUD view
+
     
     def _check_game_status(self):
         """Check the player's remaining ships and reset the level or end the game."""
@@ -121,10 +125,13 @@ class AlienInvasion:
 
     def restart_game(self):
         # setting up dynamic settings
+        self.settings.initialize_dynamic_settings
         # reset Game stats
         # update HUD score
         # reset level
+        self._reset_level
         # recenter the ship
+        self.ship._center_ship()
         self.game_active = True
         pygame.mouse.set_visible(False)
 
