@@ -12,12 +12,9 @@ import pygame
 from settings import Settings
 from game_stats import GameStats    
 from ship import Ship
-from aresenal import Arsenal
-
-# from alien_fleet import AlienFleet
+from arsenal import Arsenal
 from alien_fleet import AlienFleet
 from time import sleep
-
 
 
 class AlienInvasion:
@@ -49,8 +46,10 @@ class AlienInvasion:
         self.impact_sound = pygame.mixer.Sound(str(self.settings.impact_sound))
         self.impact_sound.set_volume(0.7)
 
-        self.ship = Ship(self, Arsenal(self))
-        from alien_fleet import AlienFleet
+        # Game‑level arsenal + ship
+        self.arsenal = Arsenal(self)
+        self.ship = Ship(self)
+
         self.alien_fleet = AlienFleet(self)
         self.game_active = True
 
@@ -58,14 +57,16 @@ class AlienInvasion:
         """Run the main game loop and handle events."""
         try:
             while self.running:
-               if self.game_active:
-                   self.ship.update()
-                   self.ship.arsenal.update_arsenal()
-                   self.alien_fleet.update_fleet()
+                self._check_events()
 
-               self._check_collisions()
-               self._update_screen()
-               self.clock.tick(self.settings.Fps)
+                if self.game_active:
+                    self.ship.update()
+                    self.arsenal.update_arsenal()
+                    self.alien_fleet.update_fleet()
+
+                self._check_collisions()
+                self._update_screen()
+                self.clock.tick(self.settings.Fps)
 
         except Exception as e:
             print("GAME CRASHED WITH ERROR:", e)
@@ -87,7 +88,7 @@ class AlienInvasion:
             return
 
         # Bullet hits alien
-        collisions = self.alien_fleet.check_collisions(self.ship.arsenal.arsenal)
+        collisions = self.alien_fleet.check_collisions(self.arsenal.arsenal)
         if collisions:
             self.impact_sound.play()
             self.impact_sound.fadeout(500)
@@ -102,25 +103,31 @@ class AlienInvasion:
         if self.game_stats.ship_limit > 0:
             self.game_stats.ship_limit -= 1
             self._reset_level()
-            sleep(0.5)  # Brief pause before resetting the level
+            sleep(0.5)
 
         else:
             self.game_active = False
 
 
-
     def _reset_level(self):
-        self.ship.arsenal.empty()
+        self.arsenal.empty()
         self.alien_fleet.fleet.empty()
         self.alien_fleet._create_fleet()
         pygame.display.flip()   
 
     def _update_screen(self):
         self.screen.blit(self.bg, (0, 0))
+
+        # Draw bullets
+        self.arsenal.draw()
+
+        # Draw ship
         self.ship.draw()
-        self.ship.arsenal.draw()
+
+        # Draw aliens
         for alien in self.alien_fleet.fleet.sprites():
             alien.draw_alien()
+
         pygame.display.flip()
 
     def _check_events(self):
@@ -145,14 +152,17 @@ class AlienInvasion:
             self.ship.moving_right = True
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = True
+
         elif event.key == pygame.K_SPACE:
-            self.ship.fire()
-            self.laser_sound.play()
-            self.laser_sound.fadeout(250)
+            if self.arsenal.fire_bullet():
+                self.laser_sound.play()
+                self.laser_sound.fadeout(250)
+
         elif event.key == pygame.K_q:
             self.running = False
             pygame.quit()
             sys.exit()
+
 
 if __name__ == '__main__':
     ai = AlienInvasion()

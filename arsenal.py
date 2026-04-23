@@ -3,7 +3,7 @@ from bullet import Bullet
 from typing import TYPE_CHECKING    
 
 if TYPE_CHECKING:
-   from alien_invasion import AlienInvasion 
+    from alien_invasion import AlienInvasion 
    
 class Arsenal:
     """Handles the ship's arsenal, including bullets and firing mechanics."""
@@ -14,10 +14,9 @@ class Arsenal:
         self.settings = game.settings
         self.arsenal = pygame.sprite.Group()  # Group to hold all active bullets   
 
-
     def update_arsenal(self):
         """Update the position of bullets and remove those that have disappeared."""
-        self.arsenal.update()  # Update the position of all bullets
+        self.arsenal.update()  
         self.remove_off_screen_bullets()
     
     def remove_off_screen_bullets(self):
@@ -29,16 +28,15 @@ class Arsenal:
     def draw(self):
         """Draw all bullets in the arsenal on the screen."""
         for bullet in self.arsenal.sprites():
-            bullet.draw()  # Draw each bullet on the screen
-
+            bullet.draw()
 
     def fire_bullet(self):
         """Fire a bullet if the limit has not been reached."""
         if len(self.arsenal) < self.settings.bullets_allowed:
             new_bullet = Bullet(self.game)
             self.arsenal.add(new_bullet)
-            return True  # Indicate that a bullet was fired
-        return False  # Indicate that the bullet limit has been reached 
+            return True  
+        return False  
     
     def empty(self):
         self.arsenal.empty()
