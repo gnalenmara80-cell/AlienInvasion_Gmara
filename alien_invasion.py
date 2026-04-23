@@ -15,6 +15,7 @@ from ship import Ship
 from arsenal import Arsenal
 from alien_fleet import AlienFleet
 from time import sleep
+from button import Button
 
 
 class AlienInvasion:
@@ -51,7 +52,9 @@ class AlienInvasion:
         self.ship = Ship(self)
 
         self.alien_fleet = AlienFleet(self)
-        self.game_active = True
+
+        self.play_button = Button(self, 'play')
+        self.game_active = False
 
     def run_game(self):
         """Run the main game loop and handle events."""
@@ -113,7 +116,17 @@ class AlienInvasion:
         self.arsenal.empty()
         self.alien_fleet.fleet.empty()
         self.alien_fleet._create_fleet()
-        pygame.display.flip()   
+        pygame.display.flip()
+
+    def restart_game(self):
+        # setting up dynamic settings
+        # reset Game stats
+        # update HUD score
+        # reset level
+        # recenter the ship
+        self.game_active = True
+        pygame.mouse.set_visible(False)
+
 
     def _update_screen(self):
         self.screen.blit(self.bg, (0, 0))
@@ -128,6 +141,10 @@ class AlienInvasion:
         for alien in self.alien_fleet.fleet.sprites():
             alien.draw_alien()
 
+        if not self.game_active:
+            self.play_button.draw()    
+            pygame.mouse.set_visible(True)
+
         pygame.display.flip()
 
     def _check_events(self):
@@ -136,10 +153,18 @@ class AlienInvasion:
                 self.running = False
                 pygame.quit()
                 sys.exit()
-            elif event.type == pygame.KEYDOWN:
+            elif event.type == pygame.KEYDOWN and self.game_active == True:
                 self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                self.new_method()
+
+    def new_method(self):
+        mouse_pos = pygame.mouse.get_pos() 
+        if self.play_button.check_clicked(mouse_pos):
+            self.restart_game()
+
 
     def _check_keyup_events(self, event):
         if event.key == pygame.K_RIGHT:

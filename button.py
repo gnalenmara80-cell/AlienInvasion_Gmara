@@ -8,19 +8,31 @@ if TYPE_CHECKING:
 
 class Button:
 
-    def __init__(self, game, msg):
-        self,game = game
-        self.screen = game.screem
+    def __init__(self, game: 'AlienInvasion', msg: str):
+        self.game = game
+        self.screen = game.screen
         self.boundaries = game.screen.get_rect()
         self.settings = game.settings
-        self.font = pygame.font(self.settings.font_file, 
-            self.settings.button_font_size)
-        self.rect = pygame.Rect(0,0,self.settings.button_w, self.settings.button_h)
-        self.rect.center = self.bounderies.center
+
+        # Correct pygame font usage
+        self.font = pygame.font.Font(
+            str(self.settings.font_file),
+            self.settings.button_font_size
+        )
+
+        # Correct spelling: boundaries
+        self.rect = pygame.Rect(0, 0, self.settings.button_w, self.settings.button_h)
+        self.rect.center = self.boundaries.center
+
         self._prep_msg(msg)
 
     def _prep_msg(self, msg):
-        self.msg_image = self.font.render(msg, True, self.settings.text_color, None)   
+        self.msg_image = self.font.render(
+            msg,
+            True,
+            self.settings.text_color,
+            None
+        )
         self.msg_image_rect = self.msg_image.get_rect()
         self.msg_image_rect.center = self.rect.center
 
@@ -30,4 +42,3 @@ class Button:
 
     def check_clicked(self, mouse_pos):
         return self.rect.collidepoint(mouse_pos)
-
