@@ -1,10 +1,17 @@
 """
-settings.py
+Program Name: Alien Invasion - Settings
 Author: Gnalen Mara
 Date: April 16, 2026
 
 Purpose:
-Stores all the configuration settings for the Alien Invasion game.
+Stores all configurable game settings including screen size, speeds, colors,
+difficulty scaling, and gameplay parameters.
+
+Starter Code Information:
+Settings structure adapted from the Alien Invasion starter code provided by
+RedBeard41 (Gabriel Walters) for CSCC coursework.
+Original starter repository:
+https://github.com/RedBeard441/alien_Invasion_starter
 """
 
 from pathlib import Path
@@ -40,7 +47,7 @@ class Settings:
         self.scores_file = Path.cwd() / 'Assets' / 'file' / 'scores.json'
 
         # Ship settings
-        self.ship_file = Path.cwd() / 'Assets' / 'images' / 'ship.png'
+        self.ship_file = Path.cwd() / 'Assets' / 'images' / 'ship2.png'
         self.ship_width = 50
         self.ship_height = 70
 
@@ -50,7 +57,7 @@ class Settings:
         self.impact_sound = Path.cwd() / 'Assets' / 'sound' / 'impactSound.mp3'
         
         # Alien settings
-        self.alien_file = Path.cwd() / 'Assets' / 'images' / 'enemy_3.png'
+        self.alien_file = Path.cwd() / 'Assets' / 'images' / 'enemy_4.png'
 
         # Fleet movement direction (1 = right, -1 = left)
         self.fleet_direction = 1

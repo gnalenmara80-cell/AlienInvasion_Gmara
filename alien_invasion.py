@@ -1,12 +1,20 @@
 """
-alien_invasion.py
+Program Name: Alien Invasion
 Author: Gnalen Mara
 Date: April 16, 2026
 
-Main entry point for the Alien Invasion game.
-Handles game initialization, event processing, updates, rendering,
-and overall game loop control.
+Purpose:
+Main entry point for the Alien Invasion game. This file initializes the game,
+manages the main loop, handles user input, updates game objects, and renders
+all visual elements to the screen.
+
+Starter Code Information:
+This project is based on the Alien Invasion starter code provided by
+RedBeard41 (Gabriel Walters) for CSCC Software Development coursework.
+Original starter repository:
+https://github.com/RedBeard441/alien_Invasion_starter
 """
+
 
 import sys
 import pygame

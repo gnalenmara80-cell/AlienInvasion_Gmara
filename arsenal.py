@@ -1,3 +1,19 @@
+"""
+Program Name: Alien Invasion - Arsenal System
+Author: Gnalen Mara
+Date: April 16, 2026
+
+Purpose:
+Manages the player's available weapons, including bullet creation, firing
+logic, ammunition limits, and weapon upgrades.
+
+Starter Code Information:
+Inspired by and extended from the Alien Invasion starter code provided by
+RedBeard41 (Gabriel Walters) for CSCC coursework.
+Original starter repository:
+https://github.com/RedBeard441/alien_Invasion_starter
+"""
+
 import pygame
 from bullet import Bullet
 from typing import TYPE_CHECKING    

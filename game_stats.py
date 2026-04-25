@@ -1,3 +1,19 @@
+"""
+Program Name: Alien Invasion - Game Statistics
+Author: Gnalen Mara
+Date: April 16, 2026
+
+Purpose:
+Tracks and manages game statistics such as score, high score, level, and
+remaining lives. Supports game resets and persistent score storage.
+
+Starter Code Information:
+Statistics logic adapted from the Alien Invasion starter code provided by
+RedBeard41 (Gabriel Walters) for CSCC coursework.
+Original starter repository:
+https://github.com/RedBeard441/alien_Invasion_starter
+"""
+
 from pathlib import Path
 import json
 

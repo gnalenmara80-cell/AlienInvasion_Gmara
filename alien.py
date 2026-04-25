@@ -1,3 +1,20 @@
+"""
+Program Name: Alien Invasion - Alien Class
+Author: Gnalen Mara
+Date: April 16, 2026
+
+Purpose:
+Defines the Alien class, which represents individual enemy units in the game.
+Handles alien positioning, movement, image loading, and behavior within the
+alien fleet.
+
+Starter Code Information:
+This class is adapted from the Alien Invasion starter code provided by
+RedBeard41 (Gabriel Walters) for CSCC Software Development coursework.
+Original starter repository:
+https://github.com/RedBeard441/alien_Invasion_starter
+"""
+
 import pygame
 
 from pygame.sprite import Sprite

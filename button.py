@@ -1,3 +1,19 @@
+"""
+Program Name: Alien Invasion - Button UI Component
+Author: Gnalen Mara
+Date: April 16, 2026
+
+Purpose:
+Defines a reusable Button class for menu interactions, including rendering,
+text display, and click detection.
+
+Starter Code Information:
+UI button structure adapted from the Alien Invasion starter code provided
+by RedBeard41 (Gabriel Walters) for CSCC coursework.
+Original starter repository:
+https://github.com/RedBeard441/alien_Invasion_starter
+"""
+
 import pygame.font
 
 from typing import TYPE_CHECKING

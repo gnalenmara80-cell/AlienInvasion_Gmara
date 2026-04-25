@@ -1,9 +1,19 @@
 """
-HUD module for Alien Invasion.
-Displays the player's score, max score, high score, level, and lives on screen.
+Program Name: Alien Invasion - HUD (Heads-Up Display)
 Author: Gnalen Mara
-Date: April 2026
+Date: April 16, 2026
+
+Purpose:
+Renders on-screen game information including score, high score, level, and
+remaining lives. Handles font rendering and display updates.
+
+Starter Code Information:
+HUD concepts inspired by the Alien Invasion starter code provided by
+RedBeard41 (Gabriel Walters) for CSCC coursework.
+Original starter repository:
+https://github.com/RedBeard441/alien_Invasion_starter
 """
+
 
 import pygame.font
 

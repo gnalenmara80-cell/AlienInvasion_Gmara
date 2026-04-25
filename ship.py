@@ -1,11 +1,19 @@
 """
-ship.py
+Program Name: Alien Invasion - Ship Class
 Author: Gnalen Mara
 Date: April 16, 2026
 
 Purpose:
-Handles the player's ship in the Alien Invasion game, including movement and drawing.
+Defines the player's ship, including movement, rendering, image loading,
+position resets, and collision behavior.
+
+Starter Code Information:
+Ship logic adapted from the Alien Invasion starter code provided by
+RedBeard41 (Gabriel Walters) for CSCC coursework.
+Original starter repository:
+https://github.com/RedBeard441/alien_Invasion_starter
 """
+
 
 import pygame
 from typing import TYPE_CHECKING

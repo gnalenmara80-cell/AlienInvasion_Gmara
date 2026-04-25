@@ -1,3 +1,19 @@
+"""
+Program Name: Alien Invasion - Alien Fleet Manager
+Author: Gnalen Mara
+Date: April 16, 2026
+
+Purpose:
+Manages the creation, layout, movement, and behavior of the alien fleet.
+Handles fleet direction changes, edge detection, and coordinated movement.
+
+Starter Code Information:
+Based on fleet-management logic from the Alien Invasion starter code
+provided by RedBeard41 (Gabriel Walters) for CSCC coursework.
+Original starter repository:
+https://github.com/RedBeard441/alien_Invasion_starter
+"""
+
 import pygame
 from typing import TYPE_CHECKING
 from alien import Alien
