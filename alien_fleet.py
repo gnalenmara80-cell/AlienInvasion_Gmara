@@ -28,6 +28,7 @@ class AlienFleet:
     """Manages creation, positioning, movement, and collision behavior of the alien fleet."""
 
     def __init__(self, game: 'AlienInvasion'):
+        """Initialize fleet manager, store references, and build the initial alien fleet."""
         self.game = game
         self.settings = game.settings
         self.screen = game.screen
@@ -38,6 +39,7 @@ class AlienFleet:
         self._create_fleet()
     
     def _create_fleet(self):
+        """Create the full alien fleet and position it on the right side of the screen."""
         alien_width = self.settings.alien_width
         alien_height = self.settings.alien_height
         screen_width = self.settings.screen_width
@@ -65,6 +67,7 @@ class AlienFleet:
             
 
     def calculate_fleet_size(self, alien_width: int, screen_width: int, alien_height: int, screen_height: int):
+        """Calculate how many aliens fit horizontally and how many rows fit vertically."""
         available_space_x = screen_width - (2 * alien_width)
         fleet_width = max(0, available_space_x // (alien_width + 10))
 
@@ -77,6 +80,7 @@ class AlienFleet:
 
 
     def _create_alien(self, x: float, y: float):
+        """Create a single alien at the specified (x, y) position and add it to the fleet."""
         alien = Alien(self.game, x, y)
 
         alien.x = float(alien.rect.x)
@@ -87,6 +91,7 @@ class AlienFleet:
 
 
     def _check_fleet_edges(self):
+        """Return True if any alien has reached the screen edge."""
         for alien in self.fleet.sprites():
             if alien.check_edges():
                 return True
@@ -94,12 +99,14 @@ class AlienFleet:
             
 
     def update_fleet(self):
+        """Update fleet movement and handle direction changes when edges are reached."""
         # UPDATED: Aliens move LEFT toward the ship
         if self._check_fleet_edges():
             self._change_fleet_direction()
         self.fleet.update() 
 
     def _change_fleet_direction(self):
+        """Drop the fleet downward and reverse its horizontal direction."""
         for alien in self.fleet.sprites():
             alien.rect.y += self.fleet_drop_speed
 
@@ -109,13 +116,16 @@ class AlienFleet:
 
 
     def draw_alien(self):
+        """Draw all aliens in the fleet onto the screen."""
         for alien in self.fleet.sprites():
             alien.draw_alien()
 
     def check_collisions(self, other_group):
+        """Check for collisions between aliens and another sprite group (e.g., bullets)."""
         return pygame.sprite.groupcollide(self.fleet, other_group, True, True)
     
     def check_fleet_bottom(self):
+        """Return True if any alien reaches the bottom of the screen."""
         screen_rect = self.screen.get_rect()
         for alien in self.fleet.sprites():
             if alien.rect.bottom >= screen_rect.bottom:
@@ -124,4 +134,5 @@ class AlienFleet:
     
     
     def check_destroyed_status(self):
+        """Return True if all aliens in the fleet have been destroyed."""
         return len(self.fleet) == 0
