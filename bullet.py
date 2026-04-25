@@ -37,17 +37,16 @@ class Bullet(Sprite):
            (self.settings.bullet_width, self.settings.bullet_height)
            )
         self.rect = self.image.get_rect()
-        self.rect.midtop = game.ship.rect.midtop
-        self.y = float(self.rect.y) 
 
+        # UPDATED: spawn bullet from the ship's right side (horizontal firing)
+        self.rect.midleft = game.ship.rect.midright
+        self.x = float(self.rect.x)
 
    def update(self):
-        """Move the bullet up the screen."""
+        """Move the bullet horizontally across the screen."""
         self.x += self.settings.bullet_speed
         self.rect.x = self.x
-
 
    def draw(self):
         """Draw the bullet on the screen."""
         self.screen.blit(self.image, self.rect)
-

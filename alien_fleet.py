@@ -28,12 +28,6 @@ class AlienFleet:
     """Manages creation, positioning, movement, and collision behavior of the alien fleet."""
 
     def __init__(self, game: 'AlienInvasion'):
-        """
-        Initialize the fleet manager.
-
-        Parameters:
-            game (AlienInvasion): Main game instance providing settings, screen, and references.
-        """
         self.game = game
         self.settings = game.settings
         self.screen = game.screen
@@ -44,16 +38,6 @@ class AlienFleet:
         self._create_fleet()
     
     def _create_fleet(self):
-        """
-        Create a full fleet of aliens arranged in rows and columns.
-
-        Uses:
-            - Alien dimensions
-            - Screen size
-            - Calculated number of rows and columns
-            - Horizontal centering
-            - y_offset to push fleet downward
-        """
         alien_width = self.settings.alien_width
         alien_height = self.settings.alien_height
         screen_width = self.settings.screen_width
@@ -67,13 +51,12 @@ class AlienFleet:
         fleet_horizontal_space = number_aliens_x * (alien_width + spacing)
         fleet_vertical_space = number_rows * (alien_height + spacing)
 
-        # Center horizontally
-        x_offset = int((screen_width - fleet_horizontal_space) // 2)
+        # UPDATED: Spawn fleet on the RIGHT side
+        x_offset = screen_width - fleet_horizontal_space - 20
 
-        # Push fleet downward
+        # Keep your downward offset
         y_offset = 120
 
-        # Create aliens row by row
         for row in range(number_rows):
             for column in range(number_aliens_x):
                 current_x = column * (alien_width + spacing) + x_offset
@@ -82,35 +65,20 @@ class AlienFleet:
             
 
     def calculate_fleet_size(self, alien_width: int, screen_width: int, alien_height: int, screen_height: int):
-        """
-        Calculate how many aliens fit horizontally and vertically.
-
-        Returns:
-            tuple: (number_aliens_x, number_rows)
-        """
         available_space_x = screen_width - (2 * alien_width)
-        fleet_width = max(0, available_space_x // (alien_width + 10))  # 10px spacing
+        fleet_width = max(0, available_space_x // (alien_width + 10))
 
         fleet_height = screen_height - (3 * alien_height) - self.settings.ship_height
-        number_rows = max(1, fleet_height // (2 * alien_height))  # Ensure at least one row
+        number_rows = max(1, fleet_height // (2 * alien_height))
      
-        # Limit rows so fleet stays near the top
         number_rows = min(number_rows, 7)
 
         return fleet_width, number_rows
 
 
     def _create_alien(self, x: float, y: float):
-        """
-        Create a single alien and add it to the fleet.
-
-        Parameters:
-            x (float): Horizontal position
-            y (float): Vertical position
-        """
         alien = Alien(self.game, x, y)
 
-        # Store float positions for smooth movement
         alien.x = float(alien.rect.x)
         alien.y = float(alien.rect.y)
 
@@ -119,12 +87,6 @@ class AlienFleet:
 
 
     def _check_fleet_edges(self):
-        """
-        Check if any alien has reached the screen edge.
-
-        Returns:
-            bool: True if an edge is reached, otherwise False.
-        """
         for alien in self.fleet.sprites():
             if alien.check_edges():
                 return True
@@ -132,52 +94,28 @@ class AlienFleet:
             
 
     def update_fleet(self):
-        """
-        Update the fleet's movement:
-        - Reverse direction if an edge is hit
-        - Move all aliens horizontally
-        """
+        # UPDATED: Aliens move LEFT toward the ship
         if self._check_fleet_edges():
             self._change_fleet_direction()
         self.fleet.update() 
 
     def _change_fleet_direction(self):
-        """
-        Drop the entire fleet downward and reverse horizontal direction.
-        """
         for alien in self.fleet.sprites():
             alien.rect.y += self.fleet_drop_speed
 
+        # UPDATED: Reverse horizontal direction (still works)
         self.settings.fleet_direction *= -1
         
 
 
     def draw_alien(self):
-        """
-        Draw all aliens in the fleet onto the screen.
-        """
         for alien in self.fleet.sprites():
             alien.draw_alien()
 
     def check_collisions(self, other_group):
-        """
-        Check collisions between aliens and another sprite group (e.g., bullets).
-
-        Parameters:
-            other_group (pygame.sprite.Group): Group to check collisions against.
-
-        Returns:
-            dict: Collision mapping from alien to bullet(s).
-        """
         return pygame.sprite.groupcollide(self.fleet, other_group, True, True)
     
     def check_fleet_bottom(self):
-        """
-        Check if any alien has reached the bottom of the screen.
-
-        Returns:
-            bool: True if bottom reached, otherwise False.
-        """
         screen_rect = self.screen.get_rect()
         for alien in self.fleet.sprites():
             if alien.rect.bottom >= screen_rect.bottom:
@@ -186,10 +124,4 @@ class AlienFleet:
     
     
     def check_destroyed_status(self):
-        """
-        Check if the entire fleet has been destroyed.
-
-        Returns:
-            bool: True if no aliens remain.
-        """
         return len(self.fleet) == 0
