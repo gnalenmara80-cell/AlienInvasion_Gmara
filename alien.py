@@ -38,19 +38,18 @@ class Alien(Sprite):
         self.screen = game.screen
         self.boundaries = game.screen.get_rect()
  
- 
-        
         self.image = pygame.image.load(self.settings.alien_file)
-        self.image = pygame.transform.scale(self.image,
-           (self.settings.alien_width, self.settings.alien_height)
-           )
+        self.image = pygame.transform.scale(
+            self.image,
+            (self.settings.alien_width, self.settings.alien_height)
+        )
         
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
 
+        # Horizontal float position for smooth movement
         self.x = float(self.rect.x)
-        self.y = float(self.rect.y)
 
     def update(self):
         """Move the alien horizontally across the screen."""
@@ -58,11 +57,9 @@ class Alien(Sprite):
         self.rect.x = self.x
 
     def check_edges(self):
-        
         screen_rect = self.screen.get_rect()
         return self.rect.right >= screen_rect.right or self.rect.left <= 0
         
     def draw_alien(self):
         """Draw the alien on the screen."""
         self.screen.blit(self.image, self.rect)
-

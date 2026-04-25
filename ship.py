@@ -40,12 +40,14 @@ class Ship:
         self.rect = self.image.get_rect()
         self._center_ship()
 
-        self.moving_right = False
-        self.moving_left = False
+        # UPDATED: vertical movement flags
+        self.moving_up = False
+        self.moving_down = False
 
     def _center_ship(self):
-        self.rect.midbottom = self.bounderies.midbottom
-        self.x = float(self.rect.x)
+        # UPDATED: start ship on the LEFT edge, vertically centered
+        self.rect.midleft = self.bounderies.midleft
+        self.y = float(self.rect.y)
 
     def update(self):
         """Update the ship's position based on movement flags and boundaries."""
@@ -53,13 +55,15 @@ class Ship:
 
     def _update_ship_movement(self):
         temp_speed = self.settings.ship_speed
-        if self.moving_right and self.rect.right < self.bounderies.right:
-            self.x += temp_speed
 
-        if self.moving_left and self.rect.left > self.bounderies.left:
-            self.x -= temp_speed
+        # UPDATED: vertical movement only
+        if self.moving_up and self.rect.top > self.bounderies.top:
+            self.y -= temp_speed
 
-        self.rect.x = self.x
+        if self.moving_down and self.rect.bottom < self.bounderies.bottom:
+            self.y += temp_speed
+
+        self.rect.y = self.y
 
     def draw(self):
         """Draw the ship on the screen."""
