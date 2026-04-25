@@ -36,9 +36,9 @@ class Arsenal:
         self.remove_off_screen_bullets()
     
     def remove_off_screen_bullets(self):
-        """Remove bullets that have moved off the top of the screen."""
+        """Remove bullets that have moved off the right side of the screen."""
         for bullet in self.arsenal.copy():
-            if bullet.rect.bottom <= 0:
+            if bullet.rect.left > self.game.settings.screen_width:
                 self.arsenal.remove(bullet)
 
     def draw(self):

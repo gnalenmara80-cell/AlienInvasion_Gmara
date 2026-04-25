@@ -87,7 +87,7 @@ class Settings:
         self.ship_speed = 7
         self.starting_ship_count = 3
         self.bullet_speed = 12
-        self.bullets_allowed = 5
+        self.bullets_allowed = 20   # Increased so you never run out mid‑game
         self.fleet_speed = 2
         self.fleet_drop_speed = 15
         self.bullet_width = 27

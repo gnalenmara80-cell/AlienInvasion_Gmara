@@ -15,7 +15,6 @@ Original starter repository:
 https://github.com/RedBeard441/alien_Invasion_starter
 """
 
-
 import sys
 import pygame
 from settings import Settings
@@ -29,20 +28,9 @@ from hud import HUD
 
 
 class AlienInvasion:
-    """
-    Main game controller class.
-
-    Responsibilities:
-    - Initialize pygame, settings, screen, and game assets.
-    - Manage the main game loop.
-    - Process keyboard and mouse events.
-    - Update game objects (ship, bullets, aliens).
-    - Detect collisions and update game state.
-    - Render all visual elements to the screen.
-    """
+    """Main game controller class."""
 
     def __init__(self):
-        """Initialize game resources and core systems."""
         pygame.init()
         self.settings = Settings()
         self.settings.initialize_dynamic_settings()
@@ -52,21 +40,18 @@ class AlienInvasion:
         )
         pygame.display.set_caption(self.settings.name)
 
-        # Background image
         self.bg = pygame.image.load(self.settings.bg_file).convert()
         self.bg = pygame.transform.scale(
             self.bg,
             (self.settings.screen_width, self.settings.screen_height)
         )
 
-        # Game state managers
         self.game_stats = GameStats(self)
         self.HUD = HUD(self)
 
         self.running = True
         self.clock = pygame.time.Clock()
 
-        # Sound effects
         pygame.mixer.init()
         self.laser_sound = pygame.mixer.Sound(str(self.settings.laser_sound))
         self.laser_sound.set_volume(0.7)
@@ -74,21 +59,15 @@ class AlienInvasion:
         self.impact_sound = pygame.mixer.Sound(str(self.settings.impact_sound))
         self.impact_sound.set_volume(0.7)
 
-        # Core game objects
         self.arsenal = Arsenal(self)
         self.ship = Ship(self)
         self.alien_fleet = AlienFleet(self)
 
-        # UI elements
         self.play_button = Button(self, 'play')
         self.game_active = False
 
     def run_game(self):
-        """
-        Main game loop.
-        Continuously processes events, updates game objects,
-        checks collisions, and redraws the screen.
-        """
+        """Main game loop that processes events, updates objects, and redraws the screen."""
         try:
             while self.running:
                 self._check_events()
@@ -109,25 +88,15 @@ class AlienInvasion:
     
 
     def _check_collisions(self):
-        """
-        Handle all collision types:
-        - Ship colliding with aliens
-        - Aliens reaching the bottom
-        - Bullets hitting aliens
-        - Entire fleet destroyed (level progression)
-        """
-
-        # Ship hits alien
+        """Handle ship collisions, bullet hits, and level progression."""
         if self.ship.check_collisions(self.alien_fleet.fleet):
             self._check_game_status()
             return
 
-        # Alien hits bottom
         if self.alien_fleet.check_fleet_bottom():
             self._check_game_status()
             return
 
-        # Bullet hits alien
         collisions = self.alien_fleet.check_collisions(self.arsenal.arsenal)
         if collisions:
             self.impact_sound.play()
@@ -135,7 +104,6 @@ class AlienInvasion:
             self.game_stats.update(collisions)
             self.HUD.update_scores()
 
-        # All aliens destroyed
         if self.alien_fleet.check_destroyed_status():
             self._reset_level()
             self.settings.increase_difficulty()
@@ -144,12 +112,7 @@ class AlienInvasion:
 
     
     def _check_game_status(self):
-        """
-        Handle player ship loss:
-        - Reduce ships_left
-        - Reset level if ships remain
-        - End game if no ships remain
-        """
+        """Handle ship loss and game over conditions."""
         if self.game_stats.ships_left > 0:
             self.game_stats.ships_left -= 1
             self._reset_level()
@@ -166,13 +129,7 @@ class AlienInvasion:
         pygame.display.flip()
 
     def restart_game(self):
-        """
-        Start a new game:
-        - Reset dynamic settings
-        - Reset stats
-        - Reset level and ship position
-        - Hide mouse cursor
-        """
+        """Start a new game session and reset all dynamic systems."""
         self.settings.initialize_dynamic_settings()
         self.game_stats.reset_stats()
         self.HUD.update_scores()
@@ -189,11 +146,9 @@ class AlienInvasion:
         self.ship.draw()
         self.HUD.draw()
 
-        # Draw aliens
         for alien in self.alien_fleet.fleet.sprites():
             alien.draw_alien()
 
-        # Draw play button if game is inactive
         if not self.game_active:
             self.play_button.draw()
             pygame.mouse.set_visible(True)
@@ -201,7 +156,7 @@ class AlienInvasion:
         pygame.display.flip()
 
     def _check_events(self):
-        """Process all keyboard and mouse events."""
+        """Process keyboard, mouse, and quit events."""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
@@ -227,17 +182,17 @@ class AlienInvasion:
 
     def _check_keyup_events(self, event):
         """Stop ship movement when arrow keys are released."""
-        if event.key == pygame.K_RIGHT:
-            self.ship.moving_right = False
-        elif event.key == pygame.K_LEFT:
-            self.ship.moving_left = False
+        if event.key == pygame.K_UP:
+            self.ship.moving_up = False
+        elif event.key == pygame.K_DOWN:
+            self.ship.moving_down = False
 
     def _check_keydown_events(self, event):
-        """Handle key presses for movement, shooting, and quitting."""
-        if event.key == pygame.K_RIGHT:
-            self.ship.moving_right = True
-        elif event.key == pygame.K_LEFT:
-            self.ship.moving_left = True
+        """Handle key presses for movement, firing, and quitting."""
+        if event.key == pygame.K_UP:
+            self.ship.moving_up = True
+        elif event.key == pygame.K_DOWN:
+            self.ship.moving_down = True
 
         elif event.key == pygame.K_SPACE:
             if self.arsenal.fire_bullet():
